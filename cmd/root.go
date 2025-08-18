@@ -23,7 +23,7 @@ import (
 	"golang.org/x/image/webp"
 )
 
-var sources types.PublisherData
+var publisherData types.PublisherData
 var publisher types.Publisher
 var shelfId int = -1
 var book types.Book
@@ -196,13 +196,13 @@ var rootCmd = &cobra.Command{
 			huh.NewGroup(
 				huh.NewSelect[int]().OptionsFunc(func() []huh.Option[int] {
 					var err error
-					sources, err = util.GetPublisherData(publisher, key)
+					publisherData, err = util.GetPublisherData(publisher, key)
 					if err != nil {
 						fmt.Println(err)
 						return []huh.Option[int]{}
 					}
 					options := []huh.Option[int]{}
-					for _, shelf := range sources.Shelfs {
+					for _, shelf := range publisherData.Shelfs {
 						options = append(options, huh.NewOption(shelf.Name, shelf.ID))
 					}
 					return options
@@ -212,7 +212,7 @@ var rootCmd = &cobra.Command{
 					if shelfId == -1 {
 						return options
 					}
-					for _, book := range sources.Shelfs[shelfId-1].Books {
+					for _, book := range publisherData.Shelfs[shelfId-1].Books {
 						options = append(options, huh.NewOption(book.Name, book))
 					}
 					return options
