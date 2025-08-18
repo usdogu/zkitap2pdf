@@ -179,9 +179,139 @@ var rootCmd = &cobra.Command{
 		form := huh.NewForm(
 			huh.NewGroup(
 				huh.NewSelect[types.Publisher]().Options(
+					huh.NewOption("Açı Yayınları", types.Publisher{
+						DataURL:   "http://dijital.aciyayinlari.com.tr/data_json.php?v=zkitapx&action=check_key&type=0&key=%s&subPrefix",
+						KeyPrefix: "21_11_22",
+					}),
+
+					huh.NewOption("Ankara Yayıncılık", types.Publisher{
+						DataURL:   "https://onlineankarayayincilik.com/data_json.php?v=zkitapx&action=check_key&type=0&key=%s&subPrefix",
+						KeyPrefix: "6_13_26",
+					}),
+
+					huh.NewOption("Arı Yayıncılık", types.Publisher{
+						DataURL:   "https://akillidefter.com.tr/data_json.php?v=zkitapx&action=check_key&type=0&key=%s&subPrefix",
+						KeyPrefix: "7_14_21",
+					}),
+
+					huh.NewOption("ATA", types.Publisher{
+						DataURL:   "http://www.ataogretmen.com/data_json.php?v=zkitapx&action=check_key&type=0&key=%s&subPrefix",
+						KeyPrefix: "1_2_6",
+					}),
+
 					huh.NewOption("Benim Hocam", types.Publisher{
 						DataURL:   "http://www.benimhocamdijital.com/data_json.php?v=zkitapx&action=check_key&type=0&key=%s&subPrefix",
 						KeyPrefix: "23_11_22",
+					}),
+
+					huh.NewOption("Berkay Yayıncılık", types.Publisher{
+						DataURL:   "http://berkayokul.com/data_json.php?v=zkitapx&action=check_key&type=0&key=%s&subPrefix",
+						KeyPrefix: "26_7_14",
+					}),
+
+					huh.NewOption("Çalışkan Arı", types.Publisher{
+						DataURL:   "http://www.caliskanarizkitap.com/data_json.php?v=zkitapx&action=check_key&type=0&key=%s&subPrefix",
+						KeyPrefix: "6_15_7",
+					}),
+
+					huh.NewOption("Çanta Yayıncılık", types.Publisher{
+						DataURL:   "http://www.cantadaakillitahta.com/data_json.php?v=zkitapx&action=check_key&type=0&key=%s&subPrefix",
+						KeyPrefix: "2_12_24",
+					}),
+
+					huh.NewOption("Endemik Yayınları", types.Publisher{
+						DataURL:   "http://akillitahta.endemikyayinlari.com.tr/data_json.php?v=zkitapx&action=check_key&type=0&key=%s&subPrefix",
+						KeyPrefix: "22_1_2",
+					}),
+
+					huh.NewOption("Fi Yayınları", types.Publisher{
+						DataURL:   "http://www.fiakillitahta.com/data_json.php?v=zkitapx&action=check_key&type=0&key=%s&subPrefix",
+						KeyPrefix: "7_3_6",
+					}),
+
+					huh.NewOption("Final Kurumsal Yayinlari", types.Publisher{
+						DataURL:   "http://finaldijital.com/data_json.php?v=zkitapx&action=check_key&type=0&key=%s&subPrefix",
+						KeyPrefix: "2_1_21",
+					}),
+
+					huh.NewOption("Gizli Yayınları", types.Publisher{
+						DataURL:   "http://gizliokul.com/data_json.php?v=zkitapx&action=check_key&type=0&key=%s&subPrefix",
+						KeyPrefix: "1_21_6",
+					}),
+
+					huh.NewOption("Günay Yayınları", types.Publisher{
+						DataURL:   "http://www.gunayportal.com/data_json.php?v=zkitapx&action=check_key&type=0&key=%s&subPrefix",
+						KeyPrefix: "9_4_8",
+					}),
+
+					huh.NewOption("Hiper Zeka", types.Publisher{
+						DataURL:   "http://www.hiperzekadijital.com/data_json.php?v=zkitapx&action=check_key&type=0&key=%s&subPrefix",
+						KeyPrefix: "8_4_8",
+					}),
+
+					huh.NewOption("İşler", types.Publisher{
+						DataURL:   "http://yeni.isleronline.com/controller/zkitap/data_json.php?v=zkitapx&action=check_key&type=0&key=%s&subPrefix",
+						KeyPrefix: "28_15_5",
+					}),
+
+					huh.NewOption("Limit", types.Publisher{
+						DataURL:   "http://kurumsal.limitheryerde.com/data_json.php?v=zkitapx&action=check_key&type=0&key=%s&subPrefix",
+						KeyPrefix: "4_17_5",
+					}),
+
+					huh.NewOption("Model Eğitim", types.Publisher{
+						DataURL:   "http://www.modelogretmen.com/data_json.php?v=zkitapx&action=check_key&type=0&key=%s&subPrefix",
+						KeyPrefix: "7_14_22",
+					}),
+
+					huh.NewOption("More And More", types.Publisher{
+						DataURL:   "http://zkitap.kurmayokul.com/data_json.php?v=zkitapx&action=check_key&type=0&key=%s&subPrefix",
+						KeyPrefix: "1_4_8",
+					}),
+
+					huh.NewOption("Mozaik Yayınları", types.Publisher{
+						DataURL:   "http://mozaikakillitahta.com/data_json.php?v=zkitapx&action=check_key&type=0&key=%s&subPrefix",
+						KeyPrefix: "23_12_24",
+					}),
+
+					huh.NewOption("Orijinal Matematik", types.Publisher{
+						DataURL:   "http://yeni.isleronline.com/controller/zkitap/data_json.php?v=zkitapx&action=check_key&type=0&key=%s&subPrefix",
+						KeyPrefix: "28_15_5",
+					}),
+
+					huh.NewOption("Paraf Akademi", types.Publisher{
+						DataURL:   "https://kutuphane.parafakademi.com/data_json.php?v=zkitapx&action=check_key&type=0&key=%s&subPrefix",
+						KeyPrefix: "2_26_3",
+					}),
+
+					huh.NewOption("PRF Yayınları", types.Publisher{
+						DataURL:   "http://prfkutuphane.prfyayinlari.com/data_json.php?v=zkitapx&action=check_key&type=0&key=%s&subPrefix",
+						KeyPrefix: "8_1_2",
+					}),
+
+					huh.NewOption("Toprak Yayıncılık", types.Publisher{
+						DataURL:   "http://toprakogretmen.com/data_json.php?v=zkitapx&action=check_key&type=0&key=%s&subPrefix",
+						KeyPrefix: "9_5_10",
+					}),
+
+					huh.NewOption("ÜçDörtBeş Yayınları", types.Publisher{
+						DataURL:   "http://www.345dijitalicerik.com/data_json.php?v=zkitapx&action=check_key&type=0&key=%s&subPrefix",
+						KeyPrefix: "1_10_20",
+					}),
+
+					huh.NewOption("Üçgen", types.Publisher{
+						DataURL:   "http://www.e-ucgen.com/data_json.php?v=zkitapx&action=check_key&type=0&key=%s&subPrefix",
+						KeyPrefix: "17_18_20",
+					}),
+
+					huh.NewOption("Ünlüler Karması", types.Publisher{
+						DataURL:   "http://unlulerakillitahta.com/data_json.php?v=zkitapx&action=check_key&type=0&key=%s&subPrefix",
+						KeyPrefix: "26_12_24",
+					}),
+
+					huh.NewOption("X Yayıncılık", types.Publisher{
+						DataURL:   "http://onlinexyayincilik.com/data_json.php?v=zkitapx&action=check_key&type=0&key=%s&subPrefix",
+						KeyPrefix: "2_1_3",
 					}),
 				).
 					Title("Yayınevi Seç").
@@ -193,6 +323,7 @@ var rootCmd = &cobra.Command{
 					return nil
 				}).Value(&key),
 			),
+
 			huh.NewGroup(
 				huh.NewSelect[int]().OptionsFunc(func() []huh.Option[int] {
 					var err error
