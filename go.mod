@@ -1,8 +1,8 @@
-module zkitap2pdf
+module github.com/usdogu/zkitap2pdf
 
 go 1.25.0
 
-require github.com/charmbracelet/huh/spinner v0.0.0-20250811123337-95b882db3fb0
+require github.com/charmbracelet/huh/spinner v0.0.0-20250818142555-c41a69ba6443
 
 require github.com/h2non/filetype v1.1.3
 
@@ -17,7 +17,7 @@ require (
 	github.com/charmbracelet/lipgloss v1.1.0 // indirect
 	github.com/charmbracelet/x/ansi v0.10.1 // indirect
 	github.com/charmbracelet/x/cellbuf v0.0.13 // indirect
-	github.com/charmbracelet/x/exp/strings v0.0.0-20250818130227-c3e1a89d7d73 // indirect
+	github.com/charmbracelet/x/exp/strings v0.0.0-20250818131617-61d774aefe53 // indirect
 	github.com/charmbracelet/x/term v0.2.1 // indirect
 	github.com/dustin/go-humanize v1.0.1 // indirect
 	github.com/erikgeiser/coninput v0.0.0-20211004153227-1c3628e74d0f // indirect

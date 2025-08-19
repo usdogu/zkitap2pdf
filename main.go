@@ -1,6 +1,6 @@
 package main
 
-import "zkitap2pdf/cmd"
+import "github.com/usdogu/zkitap2pdf/cmd"
 
 func main() {
 	cmd.Execute()

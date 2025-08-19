@@ -5,7 +5,8 @@ import (
 	"fmt"
 	"io"
 	"net/http"
-	"zkitap2pdf/types"
+
+	"github.com/usdogu/zkitap2pdf/types"
 )
 
 func GetPublisherData(publisher types.Publisher, key string) (types.PublisherData, error) {

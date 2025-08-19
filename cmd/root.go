@@ -13,8 +13,10 @@ import (
 	"slices"
 	"strconv"
 	"strings"
-	"zkitap2pdf/types"
-	"zkitap2pdf/util"
+
+	"github.com/usdogu/zkitap2pdf/util"
+
+	"github.com/usdogu/zkitap2pdf/types"
 
 	"github.com/charmbracelet/huh"
 	"github.com/charmbracelet/huh/spinner"
