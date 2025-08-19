@@ -14,9 +14,8 @@ import (
 	"strconv"
 	"strings"
 
-	"github.com/usdogu/zkitap2pdf/util"
-
 	"github.com/usdogu/zkitap2pdf/types"
+	"github.com/usdogu/zkitap2pdf/util"
 
 	"github.com/charmbracelet/huh"
 	"github.com/charmbracelet/huh/spinner"
