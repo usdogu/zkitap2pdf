@@ -24,6 +24,5 @@ func GetPublisherData(publisher types.Publisher, key string) (types.PublisherDat
 	if err != nil {
 		return types.PublisherData{}, err
 	}
-
 	return publisherData, nil
 }

@@ -3,6 +3,7 @@ package cmd
 import (
 	"archive/zip"
 	"bytes"
+	"context"
 	"fmt"
 	"image/jpeg"
 	"io"
@@ -23,7 +24,6 @@ import (
 	"golang.org/x/image/webp"
 )
 
-var publisherData types.PublisherData
 var publisher types.Publisher
 var shelfId int = -1
 var book types.Book
@@ -153,22 +153,20 @@ func convertBook(files map[string][]byte) error {
 	return nil
 }
 
-func handleBook() {
+func handleBook(_ context.Context) error {
 	bookZip, err := downloadBook()
 	if err != nil {
-		fmt.Println(err)
-		return
+		return err
 	}
 	decryptedZip, err := decryptBook(publisher.KeyPrefix, bookZip)
 	if err != nil {
-		fmt.Println(err)
-		return
+		return err
 	}
 	err = convertBook(decryptedZip)
 	if err != nil {
-		fmt.Println(err)
-		return
+		return err
 	}
+	return nil
 }
 
 var rootCmd = &cobra.Command{
@@ -176,6 +174,7 @@ var rootCmd = &cobra.Command{
 	Run: func(cmd *cobra.Command, args []string) {
 
 		var key string
+		var publisherData types.PublisherData
 		form := huh.NewForm(
 			huh.NewGroup(
 				huh.NewSelect[types.Publisher]().Options(
@@ -320,18 +319,20 @@ var rootCmd = &cobra.Command{
 					if len(s) != 8 {
 						return fmt.Errorf("anahtar 8 karakter olmalıdır")
 					}
+					var err error
+					publisherData, err = util.GetPublisherData(publisher, key)
+					if err != nil {
+						return err
+					}
+					if !publisherData.Status {
+						return fmt.Errorf("anahtar yanlış")
+					}
 					return nil
 				}).Value(&key),
 			),
 
 			huh.NewGroup(
 				huh.NewSelect[int]().OptionsFunc(func() []huh.Option[int] {
-					var err error
-					publisherData, err = util.GetPublisherData(publisher, key)
-					if err != nil {
-						fmt.Println(err)
-						return []huh.Option[int]{}
-					}
 					options := []huh.Option[int]{}
 					for _, shelf := range publisherData.Shelfs {
 						options = append(options, huh.NewOption(shelf.Name, shelf.ID))
@@ -350,9 +351,12 @@ var rootCmd = &cobra.Command{
 				}, &shelfId).Title("Kitap Seç").Value(&book),
 			),
 		)
-		form.Run()
+		err := form.Run()
+		if err == huh.ErrUserAborted {
+			os.Exit(0)
+		}
 
-		if err := spinner.New().Title("Kitap indiriliyor...").Action(handleBook).Run(); err != nil {
+		if err := spinner.New().Title("Kitap indiriliyor...").ActionWithErr(handleBook).Run(); err != nil {
 			fmt.Println("Failed:", err)
 			return
 		}
