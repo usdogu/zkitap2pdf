@@ -10,7 +10,6 @@ import (
 
 func GetPublisherData(publisher types.Publisher, key string) (types.PublisherData, error) {
 	link := fmt.Sprintf(publisher.DataURL, key)
-	fmt.Println(link)
 	resp, err := http.Get(link)
 	if err != nil {
 		return types.PublisherData{}, err
