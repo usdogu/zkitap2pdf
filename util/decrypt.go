@@ -18,8 +18,10 @@ func pkcs7Unpad(data []byte) ([]byte, error) {
 	}
 	return data[:len(data)-padding], nil
 }
+
 func DecryptFile(keyPrefix string, contents []byte) ([]byte, error) {
-	block, err := aes.NewCipher([]byte(keyPrefix + "1l0O1l0O1l0O1l0O1l0O1l0O"))
+	key := []byte(keyPrefix + "1l0O1l0O1l0O1l0O1l0O1l0O1l0O1l0O"[:32-len(keyPrefix)])
+	block, err := aes.NewCipher(key)
 	if err != nil {
 		return nil, err
 	}
