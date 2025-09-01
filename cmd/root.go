@@ -10,6 +10,7 @@ import (
 	"log"
 	"net/http"
 	"os"
+	"path"
 	"slices"
 	"strconv"
 	"strings"
@@ -358,9 +359,13 @@ var rootCmd = &cobra.Command{
 		}
 
 		if err := spinner.New().Title("Kitap indiriliyor...").ActionWithErr(handleBook).Run(); err != nil {
-			fmt.Println("Failed:", err)
+			fmt.Println("Hata:", err)
+			fmt.Scanln()
 			return
 		}
+		cwd, _ := os.Getwd()
+		fmt.Printf("Kitap %s konumuna kaydedildi. Çıkmak için bir tuşa basın.\n", path.Join(cwd, book.Name+".pdf"))
+		fmt.Scanln()
 	},
 }
 
