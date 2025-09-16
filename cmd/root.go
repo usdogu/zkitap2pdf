@@ -346,8 +346,13 @@ var rootCmd = &cobra.Command{
 					if shelfId == -1 {
 						return options
 					}
-					for _, book := range publisherData.Shelfs[shelfId-1].Books {
-						options = append(options, huh.NewOption(book.Name, book))
+					for _, shelf := range publisherData.Shelfs {
+						if shelf.ID == shelfId {
+							for _, book := range shelf.Books {
+								options = append(options, huh.NewOption(book.Name, book))
+							}
+							break
+						}
 					}
 					return options
 				}, &shelfId).Title("Kitap Seç").Value(&book),
