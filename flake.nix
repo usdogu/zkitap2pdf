@@ -16,7 +16,7 @@
         {
           devShells.default = pkgs.mkShellNoCC {
             packages = with pkgs; [
-              go_1_25
+              go_1_26
               gopls
 
             ];
