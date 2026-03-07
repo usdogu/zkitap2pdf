@@ -89,10 +89,6 @@ var rootCmd = &cobra.Command{
 			os.Exit(0)
 		}
 
-		if book == nil {
-			return
-		}
-
 		if err := spinner.New().Title("Kitap indiriliyor...").ActionWithErr(func(_ context.Context) error {
 			return core.ProcessBook(publisher, *book)
 		}).Run(); err != nil {
