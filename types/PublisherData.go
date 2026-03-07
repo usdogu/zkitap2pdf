@@ -14,4 +14,5 @@ type Book struct {
 	Name     string `json:"name"`
 	DataFile string `json:"data_file"`
 	DataZip  string `json:"data_zip"`
+	List     []Book `json:"list"`
 }
