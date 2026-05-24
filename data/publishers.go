@@ -53,6 +53,11 @@ var Publishers = []PublisherEntry{
 		KeyPrefix: "22_1_2",
 	}},
 
+	{"Fenomen Okul", types.Publisher{
+		DataURL:   "http://www.fenomenokul.com/data_json.php?v=zkitapx&action=check_key&type=0&key=%s&subPrefix",
+		KeyPrefix: "7_1_2",
+	}},
+
 	{"Fi Yayınları", types.Publisher{
 		DataURL:   "http://www.fiakillitahta.com/data_json.php?v=zkitapx&action=check_key&type=0&key=%s&subPrefix",
 		KeyPrefix: "7_3_6",
@@ -116,6 +121,11 @@ var Publishers = []PublisherEntry{
 	{"PRF Yayınları", types.Publisher{
 		DataURL:   "http://prfkutuphane.prfyayinlari.com/data_json.php?v=zkitapx&action=check_key&type=0&key=%s&subPrefix",
 		KeyPrefix: "8_1_2",
+	}},
+
+	{"Rasyonel Yayınları", types.Publisher{
+		DataURL:   "http://rasyonelzkitap.com/data_json.php?v=zkitapx&action=check_key&type=0&key=%s&subPrefix",
+		KeyPrefix: "21_13_26",
 	}},
 
 	{"Toprak Yayıncılık", types.Publisher{
