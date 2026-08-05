@@ -6,13 +6,13 @@ import (
 	"os"
 	"path"
 
+	"charm.land/huh/v2"
+	"charm.land/huh/v2/spinner"
 	"github.com/usdogu/zkitap2pdf/core"
 	"github.com/usdogu/zkitap2pdf/data"
 	"github.com/usdogu/zkitap2pdf/types"
 	"github.com/usdogu/zkitap2pdf/util"
 
-	"github.com/charmbracelet/huh"
-	"github.com/charmbracelet/huh/spinner"
 	"github.com/spf13/cobra"
 )
 
