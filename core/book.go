@@ -3,10 +3,9 @@ package core
 import (
 	"archive/zip"
 	"bytes"
-	"image/jpeg"
 	"io"
-	"log"
 	"net/http"
+	"runtime"
 	"slices"
 	"strconv"
 	"strings"
@@ -15,8 +14,7 @@ import (
 	"github.com/usdogu/zkitap2pdf/util"
 
 	"github.com/grafana/gofpdf"
-	"github.com/h2non/filetype"
-	"golang.org/x/image/webp"
+	"golang.org/x/sync/errgroup"
 )
 
 func downloadBook(book types.Book) ([]byte, error) {
@@ -88,55 +86,55 @@ func convertBook(book types.Book, files map[string][]byte) error {
 		}
 		return getPageNum(a) - getPageNum(b)
 	})
-	pdf := gofpdf.New("P", "mm", "A4", "")
-	pageWidth, pageHeight := pdf.GetPageSize()
+	images := make([]Image, len(fileNames))
 
-	for _, fileName := range fileNames {
-		content := files[fileName]
-		reader := bytes.NewReader(content)
-		var imageType string
-		kind, _ := filetype.MatchReader(reader)
-		reader.Seek(0, io.SeekStart)
-		switch kind.MIME.Value {
-		case "image/webp":
-			imageType = "webp"
-		case "image/jpeg":
-			imageType = "jpg"
-		case "image/png":
-			imageType = "png"
-		default:
-			log.Fatalf("Error: %s is not a webp or jpg or png file", fileName)
-		}
-		var imageContent []byte
-		if imageType == "webp" {
-			img, err := webp.Decode(reader)
+	g := new(errgroup.Group)
+	g.SetLimit(runtime.NumCPU())
+
+	for i, name := range fileNames {
+
+		g.Go(func() error {
+			img, err := convertImage(name, files[name])
 			if err != nil {
 				return err
 			}
-			var buf bytes.Buffer
-			if err := jpeg.Encode(&buf, img, &jpeg.Options{Quality: 100}); err != nil {
-				return err
-			}
-			imageContent = buf.Bytes()
-			imageType = "jpg"
-		} else {
-			var err error
-			imageContent, err = io.ReadAll(reader)
-			if err != nil {
-				return err
-			}
-		}
 
-		pdf.RegisterImageOptionsReader(
-			fileName,
-			gofpdf.ImageOptions{ImageType: imageType, ReadDpi: true},
-			bytes.NewReader(imageContent),
-		)
-		pdf.AddPage()
-		pdf.ImageOptions(fileName, 0, 0, pageWidth, pageHeight, false,
-			gofpdf.ImageOptions{ImageType: imageType, ReadDpi: true}, 0, "")
+			images[i] = img
+			return nil
+		})
 	}
 
+	if err := g.Wait(); err != nil {
+		return err
+	}
+
+	pdf := gofpdf.New("P", "mm", "A4", "")
+	w, h := pdf.GetPageSize()
+
+	for _, img := range images {
+		pdf.RegisterImageOptionsReader(
+			img.Name,
+			gofpdf.ImageOptions{
+				ImageType: img.Type,
+				ReadDpi:   true,
+			},
+			bytes.NewReader(img.Data),
+		)
+
+		pdf.AddPage()
+		pdf.ImageOptions(
+			img.Name,
+			0, 0,
+			w, h,
+			false,
+			gofpdf.ImageOptions{
+				ImageType: img.Type,
+				ReadDpi:   true,
+			},
+			0,
+			"",
+		)
+	}
 	if err := pdf.OutputFileAndClose(book.Name + ".pdf"); err != nil {
 		return err
 	}
